@@ -1,0 +1,44 @@
+name: Test Cache Hit
+
+on:
+  workflow_dispatch:
+    inputs:
+      git_ref:
+        description: 'Branch name or commit SHA of the PR to test'
+        required: true
+        type: string
+
+jobs:
+  test_the_action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.git_ref }}
+
+      - name: Flutter Action 1
+        uses: ./
+        id: flutter-action
+        with:
+          flutter-version: '3.27.x'
+          channel: 'stable'
+          cache: true
+
+      - name: Print Action Outputs 1
+        run: |
+          echo "Cache Hit: ${{ steps.setup_flutter.outputs.CACHE-HIT }}"
+          echo "Pub Cache Hit: ${{ steps.setup_flutter.outputs.PUB-CACHE-HIT }}"
+
+      - name: Flutter Action 2
+        uses: ./
+        id: flutter-action
+        with:
+          flutter-version: '3.27.x'
+          channel: 'stable'
+          cache: true
+
+      - name: Print Action Outputs 2
+        run: |
+          echo "Cache Hit: ${{ steps.setup_flutter.outputs.CACHE-HIT }}"
+          echo "Pub Cache Hit: ${{ steps.setup_flutter.outputs.PUB-CACHE-HIT }}"
