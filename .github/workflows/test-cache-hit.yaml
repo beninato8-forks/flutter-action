@@ -30,15 +30,8 @@ jobs:
           echo "Cache Hit: ${{ steps.flutter-action-1.outputs.CACHE-HIT }}"
           echo "Pub Cache Hit: ${{ steps.flutter-action-1.outputs.PUB-CACHE-HIT }}"
 
-      - name: Flutter Action 2
-        uses: ./
-        id: flutter-action-2
-        with:
-          flutter-version: '3.27.x'
-          channel: 'stable'
-          cache: true
-
-      - name: Print Action Outputs 2
+      - name: Add melos deps to pub cache
         run: |
-          echo "Cache Hit: ${{ steps.flutter-action-2.outputs.CACHE-HIT }}"
-          echo "Pub Cache Hit: ${{ steps.flutter-action-2.outputs.PUB-CACHE-HIT }}"
+          dart pub global activate melos
+          echo "${{ steps.flutter-action.outputs.PUB-CACHE-PATH }}/bin" >> $GITHUB_PATH
+          melos
