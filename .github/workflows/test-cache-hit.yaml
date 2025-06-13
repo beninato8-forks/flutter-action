@@ -19,7 +19,7 @@ jobs:
 
       - name: Flutter Action 1
         uses: ./
-        id: flutter-action
+        id: flutter-action-1
         with:
           flutter-version: '3.27.x'
           channel: 'stable'
@@ -27,12 +27,12 @@ jobs:
 
       - name: Print Action Outputs 1
         run: |
-          echo "Cache Hit: ${{ steps.setup_flutter.outputs.CACHE-HIT }}"
-          echo "Pub Cache Hit: ${{ steps.setup_flutter.outputs.PUB-CACHE-HIT }}"
+          echo "Cache Hit: ${{ steps.flutter-action-1.outputs.CACHE-HIT }}"
+          echo "Pub Cache Hit: ${{ steps.flutter-action-1.outputs.PUB-CACHE-HIT }}"
 
       - name: Flutter Action 2
         uses: ./
-        id: flutter-action
+        id: flutter-action-2
         with:
           flutter-version: '3.27.x'
           channel: 'stable'
@@ -40,5 +40,5 @@ jobs:
 
       - name: Print Action Outputs 2
         run: |
-          echo "Cache Hit: ${{ steps.setup_flutter.outputs.CACHE-HIT }}"
-          echo "Pub Cache Hit: ${{ steps.setup_flutter.outputs.PUB-CACHE-HIT }}"
+          echo "Cache Hit: ${{ steps.flutter-action-2.outputs.CACHE-HIT }}"
+          echo "Pub Cache Hit: ${{ steps.flutter-action-2.outputs.PUB-CACHE-HIT }}"
